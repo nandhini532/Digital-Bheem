@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝐖𝐞𝐥𝐜𝐨𝐦𝐞</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Monospace', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            background: #000;
+        }
+
+        .container {
+            position: relative; /* Changed from absolute */
+            width: 100%; /* Changed to full width */
+            height: 100vh; /* Changed to full viewport height */
+            background: url('home-img-1.jpg') no-repeat;
+            background-position: center;
+            background-size: cover;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60%;
+            text-align: center;
+            color: #fff;
+        }
+
+        .item .logo {
+            font-size: 40px;
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif; /* Different font style */
+            margin-bottom: 20px;
+        }
+        .item h1 {
+            font-size: 80px;
+            color: #cea40f; /* Increase font size */
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif; /* Different font style */
+            margin-bottom: 20px;
+        }
+
+        .text-item h2 {
+            font-size: 45px; /* Different font size */
+            font-family: 'monospace'; /* Different font style */
+            margin-bottom: 20px;
+        }
+
+        .text-item p {
+            font-size: 25px; /* Different font size */
+            font-family: 'monospace';
+        }
+
+        .login-section {
+            width: 40%;
+            height: 100%;
+            background-color: transparent; /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-box {
+            width: 80%;
+            padding: 20px;
+        }
+
+        .form-box h2 {
+            text-align: center;
+            font-size: 40px;
+            font-style: monospace;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #f2e1e8;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .input-box input::placeholder {
+            color: #decbcb; /* Placeholder color */
+        }
+
+        .btn {
+            background: #79660f;
+            width: 100%;
+            height: 45px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #a37f31;;
+        }
+        
+        .create-account {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .create-account p a {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 30px; /* Increased font size */
+            text-decoration: none;
+        }
+
+        .create-account p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">
+            <h1>𝐖𝐞𝐥𝐜𝐨𝐦𝐞 𝐋𝐨𝐮𝐧𝐠𝐞</h1>
+            <div class="text-item">
+                <h2>Discover Your Dream Destination</h2>
+                <p>Indulge in an unforgettable experience at Hotel Paradise. Sign in to access exclusive offers and book your next getaway!</p>
+            </div>
+        </div>
+        <div class="login-section">
+            <div class="form-box register">
+                <form onsubmit="return validateLoginForm();">
+                    <h2>𝐋𝐨𝐠𝐢𝐧</h2>
+                    <div class="input-box">
+                        <input type="email" id="username" placeholder="Email" required>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <input type="submit" value="Submit" class="btn">
+                    <div class="create-account">
+                        <p>𝐃𝐨𝐧'𝐭 𝐡𝐚𝐯𝐞 𝐚𝐧 𝐚𝐜𝐜𝐨𝐮𝐧𝐭 𝐲𝐞𝐭? <a href="registration.html" class="register-link">🆁🅴🅶🅸🆂🆃🅴🆁 🅷🅴🆁🅴</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function validateLoginForm() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+    
+            if (!username || !password) {
+                alert('Please enter both username and password.');
+                return false;
+            }
+    
+            if (password.length < 6) {
+                alert('Password should be at least 6 characters long.');
+                return false;
+            }
+    
+            // Additional validation for email format
+            if (!isValidEmail(username)) {
+                alert('Please enter a valid email address.');
+                return false;
+            }
+    
+            // Replace the placeholder URL with your actual home page URL
+            window.location.href = "index.html";
+    
+            // Prevent the form from actually submitting
+            return false;
+        }
+    
+        // Function to validate email format
+        function isValidEmail(email) {
+            // Basic email format check (contains '@' symbol)
+            return /\S+@\S+\.\S+/.test(email);
+        }
+    </script>
+</body>
+</html>
