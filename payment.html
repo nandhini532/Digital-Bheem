@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment and Balance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Monospace', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: url('home-img.jpg') no-repeat;
+            background-size: cover;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item {
+            width: 60%;
+            text-align: center;
+            color: #fff;
+        }
+
+        .item h1 {
+            font-size: 80px;
+            color: #cea40f;
+            font-weight: bold;
+            font-family: 'Arial Black', sans-serif;
+            margin-bottom: 20px;
+        }
+
+        .text-item h2 {
+            font-size: 45px;
+            color: #fffcfc;
+            font-family: 'monospace';
+            margin-bottom: 20px;
+        }
+
+        .text-item p {
+            font-size: 25px;
+            color: #852f2f;
+            font-family: 'monospace';
+        }
+
+        .payment-section {
+            width: 40%;
+            height: 100%;
+            background-color: transparent; /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-box {
+            width: 80%;
+            padding: 20px;
+        }
+
+        .form-box h2 {
+            text-align: center;
+            font-size: 40px;
+            font-style: monospace;
+            color: #fff7f7;
+            margin-bottom: 20px;
+        }
+
+        .input-box {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .input-box label {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .input-box input {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #c67a9a;
+            border-radius: 5px;
+            outline: none;
+            color: #460d0d;
+            font-family: 'Georgia';
+        }
+
+        .input-box input::placeholder {
+            color: #642222;
+        }
+
+        .btn {
+            background: #79660f;
+            width: 100%;
+            height: 45px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #a37f31;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">
+            <h1>Payment and Balance</h1>
+            <div class="text-item">
+                <h2>Collect advance payment and calculate the balance.</h2>
+                <p>Automatically calculate Total Cost (Room + Amenities) and account for extra person charges if applicable (₹1000/day).</p>
+            </div>
+        </div>
+
+        <div class="payment-section">
+            <div class="form-box payment">
+                <form id="paymentForm" onsubmit="return calculateBalance();">
+                    <h2>🅿🅰🆈🅼🅴🅽🆃 🅳🅴🆃🅰🅸🅻🆂</h2>
+                    <div class="input-box">
+                       
+                        <input type="number" id="advancePayment" placeholder="Enter advance payment" min="0" required>
+                    </div>
+                    <div class="input-box">
+                        
+                        <input type="number" id="extraPersons" placeholder="Enter number of extra persons" min="0">
+                    </div>
+                    <div class="input-box">
+                        
+                        <input type="number" id="totalCost" placeholder="Total cost" readonly>
+                    </div>
+                    <div class="input-box">
+                        
+                        <input type="number" id="balance" placeholder="Balance after advance payment" readonly>
+                    </div>
+                   
+                    <input type="submit" value="Calculate Balance" class="btn">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Retrieve total cost from localStorage
+            var totalRoomCost = parseFloat(localStorage.getItem("totalRoomCost")) || 0;
+            var totalAmenitiesCost = parseFloat(localStorage.getItem("totalAmenitiesCost")) || 0;
+            var totalCost = totalRoomCost + totalAmenitiesCost;
+            document.getElementById("totalCost").value = "₹" + totalCost.toFixed(2);
+        }
+    
+        function calculateBalance() {
+            var advancePayment = parseFloat(document.getElementById("advancePayment").value) || 0;
+            var extraPersons = parseFloat(document.getElementById("extraPersons").value) || 0;
+    
+            var totalRoomCost = parseFloat(localStorage.getItem("totalRoomCost")) || 0;
+            var totalAmenitiesCost = parseFloat(localStorage.getItem("totalAmenitiesCost")) || 0;
+            var totalCost = totalRoomCost + totalAmenitiesCost;
+    
+            var totalIncludingExtra = totalCost + extraPersons * 1000;
+            var balance = totalIncludingExtra - advancePayment;
+    
+            document.getElementById("balance").value = "₹" + balance.toFixed(2);
+    
+            alert("Total cost: ₹" + totalIncludingExtra.toFixed(2) + "\nBalance after advance payment: ₹" + balance.toFixed(2));
+    
+            var registrationConfirmation = confirm("Do you want to proceed with registration?");
+    
+            if (registrationConfirmation) {
+                alert("Registration successful! Please proceed with the payment.");
+                var paymentConfirmation = confirm("Would you like to proceed with the payment using QR code?");
+                if (paymentConfirmation) {
+                    // Create FormData object and append data
+                    var formData = new FormData();
+                    formData.append("totalCost", totalIncludingExtra.toFixed(2));
+                    formData.append("balance", balance.toFixed(2));
+    
+                    // For demonstration, let's log the form data
+                    for (var pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
+                    }
+    
+                    // Store FormData in localStorage if needed for redirection
+                    // localStorage.setItem("paymentFormData", JSON.stringify(Array.from(formData)));
+    
+                    // For redirection, you can do something like:
+                    // window.location.href = "payment.html";
+                } else {
+                    alert("Payment cancelled. Thank you for registering!");
+                }
+            } 
+           
+            // Prevent the form from actually submitting
+            return false;
+        }
+    </script>
+</body>
+</html>
